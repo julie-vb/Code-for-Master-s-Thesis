@@ -1,0 +1,1377 @@
+library(ncdf4)
+library(tidyverse)
+library(zoo)
+
+#Data collection from the CPC Global Daily Unified Gauge-Based Analysis of Precipitation dataset
+#Done separately for each year due to the large size of the dataset
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1979_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+
+#Computing the realised volatility of precipitation across space
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly)
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1980_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1980 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1980)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1981_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1981 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1981)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1982_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1982 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1982)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1983_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1983 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1983)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1984_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1984 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1984)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1985_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1985 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1985)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1986_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1986 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1986)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1987_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1987 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1987)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1988_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1988 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1988)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1989_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1989 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1989)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1990_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1990 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1990)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1991_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1991 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1991)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1992_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1992 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1992)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1993_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1993 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1993)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1994_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1994 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1994)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1995_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1995 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1995)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1996_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1996 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1996)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1997_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1997 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1997)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1998_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1998 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1998)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1999_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly1999 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly1999)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2000_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2000 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2000)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2001_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2001 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2001)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2002_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2002 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2002)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2003_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2003 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2003)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2004_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2004 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2004)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2005_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2005 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2005)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2006_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2006 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2006)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2007_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2007 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2007)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2008_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2008 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2008)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2009_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2009 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2009)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2010_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2010 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2010)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2011_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2011 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2011)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2012_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2012 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2012)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2013_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2013 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2013)
+
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2014_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2014 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2014)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2015_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2015 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2015)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2016_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2016 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2016)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2017_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2017 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2017)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2018_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2018 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2018)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2019_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2019 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2019)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2020_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2020 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2020)
+
+
+global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_2021_v1.0.nc')
+
+lon <- ncvar_get(global_data, 'lon')   
+lat <- ncvar_get(global_data, 'lat')   
+time <- ncvar_get(global_data, 'time') 
+time_units <- ncatt_get(global_data, 'time', 'units')$value
+ref_date <- as.Date(sub('days since ', '', time_units))
+time_dates <- ref_date + time
+precip_data <- ncvar_get(global_data, 'pr')  
+
+precip_data <- aperm(precip_data, c(3, 2, 1))
+df <- expand.grid(lon = lon, lat = lat, time = time_dates)
+df$precip <- as.vector(precip_data) 
+
+df_quarterly <- df %>%
+  mutate(YearQuarter = as.yearqtr(time, format = '%Y-%m-%d')) %>%
+  group_by(lon, lat, YearQuarter) %>%
+  summarise(quarterly_precip = sum(precip, na.rm = TRUE), .groups = 'drop')  
+
+global_mean <- df_quarterly %>%
+  group_by(YearQuarter) %>%
+  summarise(global_mean = mean(quarterly_precip, na.rm = TRUE), .groups = 'drop')  
+
+rv_quarterly2021 <- df_quarterly %>%
+  left_join(global_mean, by = 'YearQuarter') %>%
+  group_by(YearQuarter) %>%
+  summarise(realised_volatility = mean((quarterly_precip - global_mean)^2, na.rm = TRUE), .groups = 'drop')
+print(rv_quarterly2021)
+
+library(dplyr)
+
+rv_all <- bind_rows(
+  rv_quarterly,
+  rv_quarterly1980,
+  rv_quarterly1981,
+  rv_quarterly1982,
+  rv_quarterly1983,
+  rv_quarterly1984,
+  rv_quarterly1985,
+  rv_quarterly1986,
+  rv_quarterly1987,
+  rv_quarterly1988,
+  rv_quarterly1989,
+  rv_quarterly1990,
+  rv_quarterly1991,
+  rv_quarterly1992,
+  rv_quarterly1993,
+  rv_quarterly1994,
+  rv_quarterly1995,
+  rv_quarterly1996,
+  rv_quarterly1997,
+  rv_quarterly1998,
+  rv_quarterly1999,
+  rv_quarterly2000,
+  rv_quarterly2001,
+  rv_quarterly2002,
+  rv_quarterly2003,
+  rv_quarterly2004,
+  rv_quarterly2005,
+  rv_quarterly2006,
+  rv_quarterly2007,
+  rv_quarterly2008,
+  rv_quarterly2009,
+  rv_quarterly2010,
+  rv_quarterly2011,
+  rv_quarterly2012,
+  rv_quarterly2013,
+  rv_quarterly2014,
+  rv_quarterly2015,
+  rv_quarterly2016,
+  rv_quarterly2017,
+  rv_quarterly2018,
+  rv_quarterly2019,
+  rv_quarterly2020,
+  rv_quarterly2021
+)
+
+write.csv(rv_all, file = 'rv_quarterly.csv', row.names = FALSE)
+
+#Outlier removal
+data <- read.csv('C:/Users/justj/Documents/Thesis files/rv_all.csv')
+data$YearQuarter <- as.yearqtr(data$YearQuarter, format = '%Y Q%q')
+ggplot(data = data, aes(x = YearQuarter, y = realised_volatility)) +
+  geom_line() +
+  labs(title = 'Realised Volatility Across Space (Quarterly)', x = 'Quarter', y = 'Realised Volatility') +
+  theme_minimal()
+
+ggplot(data = data, aes(x = YearQuarter, y = log(realised_volatility))) +
+  geom_line() +
+  labs(title = 'Log of Realised Volatility Across Space', x = 'Quarter', y = 'Log of Realised Volatility') +
+  theme_minimal()
+
+#Replacing outliers in Q4 with the average RV values of the corresponding quarters in 2003 and 2005
+data$realised_volatility[101] <- 876.44515
+data$realised_volatility[102] <- 1695.1308
+data$realised_volatility[103] <- 485.52625
+data$realised_volatility[104] <- 1198.2759
