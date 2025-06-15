@@ -1,0 +1,390 @@
+#Summary statistics per city
+y <- read.csv('C:/Users/justj/Documents/Thesis files/realised_volatility_data.csv')
+data_athens <- y[,2]
+data_barcelona <- y[,3]
+data_belgrade <- y[,4]
+data_berlin <- y[,5]
+data_bern <- y[,6]
+data_brnoturany <- y[,7]
+data_bucharest <- y[,8]
+data_budapest <- y[,9]
+data_copenhagen <- y[,10]
+data_debilt <- y[,11]
+data_dublin <- y[,12]
+data_helsinki <- y[,13]
+data_hohenpeissenberg <- y[,14]
+data_innsbruck <- y[,15]
+data_karlsruhe <- y[,16]
+data_kremsmunster <- y[,17]
+data_lisbon <- y[,18]
+data_london <- y[,19]
+data_lviv <- y[,20]
+data_madrid <- y[,21]
+data_marseille <- y[,22]
+data_milan <- y[,23]
+data_munich <- y[,24]
+data_oslo <- y[,25]
+data_paris <- y[,26]
+data_regensburg <- y[,27]
+data_rome <- y[,28]
+data_sofia <- y[,29]
+data_stockholm <- y[,30]
+data_stuttgart <- y[,31]
+data_tirana <- y[,32]
+data_trondheim <- y[,33]
+data_uppsala <- y[,34]
+data_vienna <- y[,35]
+data_vilnius <- y[,36]
+data_warsaw <- y[,37]
+data_zagreb <- y[,38]
+
+summary(data_athens)
+min_index <- which.min(data_athens)
+max_index <- which.max(data_athens)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_barcelona)
+min_index <- which.min(data_barcelona)
+max_index <- which.max(data_barcelona)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_belgrade)
+min_index <- which.min(data_belgrade)
+max_index <- which.max(data_belgrade)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_berlin)
+min_index <- which.min(data_berlin)
+max_index <- which.max(data_berlin)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_bern)
+min_index <- which.min(data_bern)
+max_index <- which.max(data_bern)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_brnoturany)
+min_index <- which.min(data_brnoturany)
+max_index <- which.max(data_brnoturany)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_bucharest)
+min_index <- which.min(data_bucharest)
+max_index <- which.max(data_bucharest)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_budapest)
+min_index <- which.min(data_budapest)
+max_index <- which.max(data_budapest)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_copenhagen)
+min_index <- which.min(data_copenhagen)
+max_index <- which.max(data_copenhagen)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_debilt)
+min_index <- which.min(data_debilt)
+max_index <- which.max(data_debilt)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+summary(data_dublin)
+min_index <- which.min(data_dublin)
+max_index <- which.max(data_dublin)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+min_date
+max_date
+
+min_index <- which.min(data_helsinki)
+max_index <- which.max(data_helsinki)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_helsinki)
+min_date
+max_date
+
+min_index <- which.min(data_hohenpeissenberg)
+max_index <- which.max(data_hohenpeissenberg)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_hohenpeissenberg)
+min_date
+max_date
+
+min_index <- which.min(data_innsbruck)
+max_index <- which.max(data_innsbruck)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_innsbruck)
+min_date
+max_date
+
+min_index <- which.min(data_karlsruhe)
+max_index <- which.max(data_karlsruhe)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_karlsruhe)
+min_date
+max_date
+
+min_index <- which.min(data_kremsmunster)
+max_index <- which.max(data_kremsmunster)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_kremsmunster)
+min_date
+max_date
+
+min_index <- which.min(data_lisbon)
+max_index <- which.max(data_lisbon)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_lisbon)
+min_date
+max_date
+
+min_index <- which.min(data_london)
+max_index <- which.max(data_london)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_london)
+min_date
+max_date
+
+min_index <- which.min(data_lviv)
+max_index <- which.max(data_lviv)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_lviv)
+min_date
+max_date
+
+min_index <- which.min(data_madrid)
+max_index <- which.max(data_madrid)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_madrid)
+min_date
+max_date
+
+min_index <- which.min(data_marseille)
+max_index <- which.max(data_marseille)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_marseille)
+min_date
+max_date
+
+min_index <- which.min(data_milan)
+max_index <- which.max(data_milan)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_milan)
+min_date
+max_date
+
+min_index <- which.min(data_munich)
+max_index <- which.max(data_munich)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_munich)
+min_date
+max_date
+
+min_index <- which.min(data_oslo)
+max_index <- which.max(data_oslo)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_oslo)
+min_date
+max_date
+
+min_index <- which.min(data_paris)
+max_index <- which.max(data_paris)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_paris)
+min_date
+max_date
+
+min_index <- which.min(data_regensburg)
+max_index <- which.max(data_regensburg)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_regensburg)
+min_date
+max_date
+
+min_index <- which.min(data_rome)
+max_index <- which.max(data_rome)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_rome)
+min_date
+max_date
+
+min_index <- which.min(data_sofia)
+max_index <- which.max(data_sofia)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_sofia)
+min_date
+max_date
+
+min_index <- which.min(data_stockholm)
+max_index <- which.max(data_stockholm)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_stockholm)
+min_date
+max_date
+
+min_index <- which.min(data_stuttgart)
+max_index <- which.max(data_stuttgart)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_stuttgart)
+min_date
+max_date
+
+min_index <- which.min(data_tirana)
+max_index <- which.max(data_tirana)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_tirana)
+min_date
+max_date
+
+min_index <- which.min(data_trondheim)
+max_index <- which.max(data_trondheim)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_trondheim)
+min_date
+max_date
+
+min_index <- which.min(data_uppsala)
+max_index <- which.max(data_uppsala)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_uppsala)
+min_date
+max_date
+
+min_index <- which.min(data_vienna)
+max_index <- which.max(data_vienna)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_vienna)
+min_date
+max_date
+
+min_index <- which.min(data_vilnius)
+max_index <- which.max(data_vilnius)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_vilnius)
+min_date
+max_date
+
+min_index <- which.min(data_warsaw)
+max_index <- which.max(data_warsaw)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_warsaw)
+min_date
+max_date
+
+min_index <- which.min(data_zagreb)
+max_index <- which.max(data_zagreb)
+min_date <- y[min_index, 1] 
+max_date <- y[max_index, 1]
+summary(data_zagreb)
+min_date
+max_date
+
+
+
+top_indices <- order(data_athens, decreasing = TRUE)[1:10]
+top_rv_values <- data_athens[top_indices]
+top_quarters <- y[top_indices, 1]  
+top_10_rv <- data.frame(Quarter = top_quarters, RV = top_rv_values)
+print(top_10_rv)
+
+top_indices <- order(data_barcelona, decreasing = TRUE)[1:10]
+top_rv_values <- data_barcelona[top_indices]
+top_quarters <- y[top_indices, 1]  
+top_10_rv <- data.frame(Quarter = top_quarters, RV = top_rv_values)
+print(top_10_rv)
+
+
+sd(data_athens)
+sd(data_barcelona)
+sd(data_belgrade)
+sd(data_berlin)
+sd(data_bern)
+sd(data_brnoturany)
+sd(data_bucharest)
+sd(data_budapest)
+sd(data_copenhagen)
+sd(data_debilt)
+sd(data_dublin)
+sd(data_helsinki)
+sd(data_hohenpeissenberg)
+sd(data_innsbruck)
+sd(data_karlsruhe)
+sd(data_kremsmunster)
+sd(data_lisbon)
+sd(data_london)
+sd(data_lviv)
+sd(data_madrid)
+sd(data_marseille)
+sd(data_milan)
+sd(data_munich)
+sd(data_oslo)
+sd(data_paris)
+sd(data_regensburg)
+sd(data_rome)
+sd(data_sofia)
+sd(data_stockholm)
+sd(data_stuttgart)
+sd(data_tirana)
+sd(data_trondheim)
+sd(data_uppsala)
+sd(data_vienna)
+sd(data_vilnius)
+sd(data_warsaw)
+sd(data_zagreb)
+
+
