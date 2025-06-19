@@ -5,6 +5,7 @@ library(ggplot2)
 library(dplyr)
 
 #Data from the E-OBS dataset (v30.0e) from Copernicus Climate Change Service
+#Cornes, R., van der Schrier, G., van den Besselaar, E.J.M., Jones, P., (2018). An Ensemble Version of the E-OBS Temperature and Precipitation Datasets. [Dataset]. Journal of Geophysical Research: Atmospheres, 123. https://doi.org/10.24381/cds.151d3ec6  
 nc <- nc_open('C:/Users/justj/Downloads/rr_ens_mean_0.1deg_reg_v30.0e.nc')
 lon <- ncvar_get(nc, 'longitude')  
 lat <- ncvar_get(nc, 'latitude')   
