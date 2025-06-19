@@ -3,6 +3,7 @@ library(tidyverse)
 library(zoo)
 
 #Data collection from the CPC Global Daily Unified Gauge-Based Analysis of Precipitation dataset
+#Chen, M., Xie, P., Silva, V.B.S., Kousky, V.E., Higgins, R.W. and Janowiak, J.E. (2008). CPC Unified Gauge-Based Analysis of Global Daily Precipitation. [Dataset]. NOAA Physical Sciences Laboratory. Retrieved from: https://psl.noaa.gov/data/gridded/data.cpc.globalprecip.html 
 #Done separately for each year due to the large size of the dataset
 
 global_data <- nc_file <- nc_open('C:/Users/justj/Documents/Thesis files/globaldataset/CPC_total_precipitation_day_0.5x0.5_global_1979_v1.0.nc')
