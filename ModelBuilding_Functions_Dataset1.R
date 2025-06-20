@@ -10,7 +10,7 @@ y <- as.matrix(y)
 k <- ncol(y)
 ar_order <- rep(2, k)
 
-#The following two functions used to build the SSMs are from Hartl (2025).
+#The following two functions used to build the SSMs are from Hartl, T. (2025).
 #ToComp function: stability check
 toComp <- function(x)
 {
